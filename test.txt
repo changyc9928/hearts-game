@@ -1,0 +1,125 @@
+se = selection test
+de = determinization "3" (hand se) (trickSoFar se) (prevTrickMemo se)
+q = expand "3" test se de
+w = execState (simulation ini' "3") ini'
+w = execState (simulation q "3") q
+e = execState (simulation w "3") w
+r = execState (simulation e "3") e
+t = execState (simulation r "3") r
+y = execState (simulation t "3") t
+u = execState (simulation y "3") y
+i = execState (simulation u "3") u
+o = execState (simulation i "3") i
+p = execState (simulation o "3") o
+a = execState (simulation p "3") p
+s = execState (simulation a "3") a
+d = execState (simulation s "3") s
+f = execState (simulation d "3") d
+g = execState (simulation f "3") f
+h = execState (simulation g "3") g
+j = execState (simulation h "3") h
+k = execState (simulation j "3") j
+l = execState (simulation k "3") k
+z = execState (simulation l "3") l
+x = execState (simulation z "3") z
+c = execState (simulation x "3") x
+
+test = treeInitialization "YC" prevM current' hand'
+se = selection test
+de = determinization "YC" (hand se) (trickSoFar se) (prevTrickMemo se)
+ex = expand "YC" test se de
+ft = fullTrick ex (getNumberOfOpponent (prevTrickMemo se) (hand se) + 1)
+ini = initialState ex ft "yC"
+bo = nodePresent ini test
+ini' = retrieveNodeIfPresent ini bo test
+w = execState (simulation "YC" False) ini'
+e = execState (simulation "YC" False) w
+r = execState (simulation "3" False) e
+t = execState (simulation "4") r
+y = execState (simulation "4") t
+u = execState (simulation "4") y
+i = execState (simulation "4") u
+o = execState (simulation "4") i
+p = execState (simulation "4") o
+a = execState (simulation "4") p
+s = execState (simulation a "3") a
+d = execState (simulation s "3") s
+f = execState (simulation d "3") d
+g = execState (simulation f "3") f
+h = execState (simulation g "3") g
+j = execState (simulation h "3") h
+k = execState (simulation j "3") j
+l = execState (simulation k "3") k
+z = execState (simulation l "3") l
+x = execState (simulation z "3") z
+c = execState (simulation x "3") x
+v = execState (simulation c "3") c
+b = execState (simulation v "3") v
+n = execState (simulation b "3") b
+m = execState (simulation n "3") n
+q = execState (simulation m "3") m
+sim = evalState (simulation "2" False) ini'
+wl = winLose sim 0
+temp = insertNode se ini' test bo
+newTree = backPropagation ini' wl temp
+putStr $ drawTree $ show <$> newTree
+
+
+se = selection newTree
+de = determinization "2" (hand se) (trickSoFar se) (prevTrickMemo se)
+ex = expand "3" newTree se de
+ft = fullTrick ex (getNumberOfOpponent (prevTrickMemo se) (hand se) + 1)
+ini = initialState ex ft "2"
+bo = nodePresent ini newTree
+ini' = retrieveNodeIfPresent ini bo newTree
+w = execState (simulation "2" False) ini'
+e = execState (simulation "2" Fasle) w
+r = execState (simulation e "3") e
+t = execState (simulation r "3") r
+y = execState (simulation t "3") t
+u = execState (simulation y "3") y
+i = execState (simulation u "3") u
+o = execState (simulation i "3") i
+p = execState (simulation o "3") o
+a = execState (simulation p "3") p
+s = execState (simulation a "3") a
+d = execState (simulation s "3") s
+f = execState (simulation d "3") d
+g = execState (simulation f "3") f
+h = execState (simulation g "3") g
+j = execState (simulation h "3") h
+k = execState (simulation j "3") j
+l = execState (simulation k "3") k
+z = execState (simulation l "3") l
+x = execState (simulation z "3") z
+c = execState (simulation x "3") x
+v = execState (simulation c "3") c
+b = execState (simulation v "3") v
+n = execState (simulation b "3") b
+m = execState (simulation n "3") n
+q = execState (simulation m "3") m
+sim = evalState (simulation "2" False) ini'
+wl = winLose sim 0
+temp = insertNode se ini' newTree bo
+newTree = backPropagation ini' wl temp
+putStr $ drawTree $ show <$> (\ x -> (timesWon x, timesSimulated x)) <$> newTree
+
+se = selection newTree
+de = determinization "2" (hand se) (trickSoFar se) (prevTrickMemo se)
+ex = expand "2" newTree se de
+ft = fullTrick ex (getNumberOfOpponent (prevTrickMemo se) (hand se) + 1)
+ini = initialState ex ft "2"
+bo = nodePresent ini newTree
+ini' = retrieveNodeIfPresent ini bo newTree
+w = execState (simulation "2" False) ini'
+sim = evalState (simulation "2" False) ini'
+wl = winLose sim 0
+temp = insertNode se ini' newTree bo
+newTree = backPropagation ini' wl temp
+putStr $ drawTree $ show <$> (\ x -> (timesWon x, timesSimulated x)) <$> newTree
+
+
+a = execState (monteCarloSearch "2" 0 150 False) test
+b = evalState (monteCarloSearch "2" 0 150 False) test
+
+(MCTSNode {prevTrickMemo = Just ([(CK,"Alfons"),(C2,"YC")],""), trickSoFar = [(C8,"YC"),(CJ,"Alfons")], hand = [D6,H7,SA,H2,S5,H6,S10,CA,D9,D5,H4,S3,D3,S7,D7,H8,H9,DA,DJ,HJ,SQ,CQ,DK,SA], winnerId = "Alfons", timesWon = 0, timesSimulated = 0, parentTimesSimulated = 1, self = False},[C4,C5,D2,S9,C3,H3,C7,S8,D4,C6,SJ,H5,C9,HQ,DQ,D10,HK,S2,HA,H10,SK,S4,C10,S6,D8])
